@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shards", "Shards.csproj", "{38EA6CAF-2BD9-4959-9EDA-0459CAE675C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38EA6CAF-2BD9-4959-9EDA-0459CAE675C4}.Debug|x64.ActiveCfg = Debug|x64
+		{38EA6CAF-2BD9-4959-9EDA-0459CAE675C4}.Debug|x64.Build.0 = Debug|x64
+		{38EA6CAF-2BD9-4959-9EDA-0459CAE675C4}.Release|x64.ActiveCfg = Release|x64
+		{38EA6CAF-2BD9-4959-9EDA-0459CAE675C4}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1685CCC-D628-4737-82C3-C12653A123E3}
+	EndGlobalSection
+EndGlobal
