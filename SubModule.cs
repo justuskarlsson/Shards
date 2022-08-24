@@ -9,6 +9,7 @@ using TaleWorlds.Library;
 using System.Collections.Generic;
 using HarmonyLib;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Shards
 {
@@ -68,24 +69,25 @@ namespace Shards
         [HarmonyPrefix]
         [HarmonyPatch(typeof(MissionCombatMechanicsHelper), "GetAttackCollisionResults")]
         private static void GetAttackCollisionResults(AttackInformation attackInformation,
-            bool crushedThrough, ref float momentumRemaining, MissionWeapon attackerWeapon,
-            ref bool cancelDamage, ref AttackCollisionData attackCollisionData, CombatLogData combatLog, int speedBonus)
+            ref bool crushedThrough, ref float momentumRemaining, MissionWeapon attackerWeapon,
+            ref bool cancelDamage, ref AttackCollisionData attackCollisionData, ref CombatLogData combatLog, ref int speedBonus)
         {
-            Harmony.DEBUG = true;
-            List<string> buffer = FileLog.GetBuffer(true);
+            //Harmony.DEBUG = true;
+            //List<string> buffer = FileLog.GetBuffer(true);
 
-            buffer.Add("");
-            buffer.Add("");
-            buffer.Add("CalculateBaseMeleeBlowMagnitude");
-            buffer.Add("Weapon item name: " + attackerWeapon.GetModifiedItemName());
-            buffer.Add("Weapon player victim: " + attackInformation.IsVictimPlayer);
-            buffer.Add("momentumRemaining: " + momentumRemaining);
-            FileLog.LogBuffered(buffer);
-            FileLog.FlushBuffer();
+            //buffer.Add("");
+            //buffer.Add("");
+            //buffer.Add("CalculateBaseMeleeBlowMagnitude");
+            //buffer.Add("Weapon item name: " + attackerWeapon.GetModifiedItemName());
+            //buffer.Add("Weapon player victim: " + attackInformation.IsVictimPlayer);
+            //buffer.Add("momentumRemaining: " + momentumRemaining);
+            //FileLog.LogBuffered(buffer);
+            //FileLog.FlushBuffer();
 
-            Harmony.DEBUG = false;
+            //Harmony.DEBUG = false;
             if (attackerWeapon.GetModifiedItemName().Contains("Shard Blade")) {
-                momentumRemaining = 1000f;
+                momentumRemaining = 10f;
+                crushedThrough = true;
                 cancelDamage = false;
             }
         }
@@ -102,13 +104,13 @@ namespace Shards
             base.OnBeforeInitialModuleScreenSetAsRoot();
             var harmony = new Harmony("com.Shards.jullinator");
 
-            harmony.PatchAll();
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
 
-        public override void OnMissionBehaviorInitialize(Mission mission) {
-            base.OnMissionBehaviorInitialize(mission);
-            //mission.AddMissionBehavior(new ShardsMissionBehavior());
-        }
+        //public override void OnMissionBehaviorInitialize(Mission mission) {
+        //    base.OnMissionBehaviorInitialize(mission);
+        //    //mission.AddMissionBehavior(new ShardsMissionBehavior());
+        //}
     }
 
     //public class ShardsMissionBehavior : MissionView {

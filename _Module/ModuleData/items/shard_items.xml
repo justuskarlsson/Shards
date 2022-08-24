@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+   <Item id="shard_plate"
+        name="{=VQSdhQE3}Shard Plate"
+        mesh="imperial_lamellar_b"
+        subtype="body_armor"
+        culture="Culture.empire"
+        weight="0.3840"
+        difficulty="0"
+        appearance="3"
+        Type="BodyArmor">
+    <ItemComponent>
+      <Armor body_armor="120"
+             leg_armor="40"
+             arm_armor="32"
+             covers_body="true"
+             modifier_group="plate"
+             material_type="Plate" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+<Item id="shard_helmet_1"
+        name="Shard Helmet"
+        mesh="sturgian_helmet_b_close"
+        culture="Culture.sturgia"
+        weight="0.18"
+        appearance="2"
+        Type="HeadArmor">
+    <ItemComponent>
+      <Armor head_armor="104"
+             has_gender_variations="false"
+             hair_cover_type="all"
+             beard_cover_type="all"
+             modifier_group="plate"
+             material_type="Plate" />
+    </ItemComponent>
+    <Flags />
+  </Item>
+  <CraftedItem id="shard_blade_1"
+               name="Shard Blade"
+               crafting_template="TwoHandedSword"
+               culture="Culture.vlandia">
+    <Pieces>
+      <Piece id="piece_shard_blade_1"
+             Type="Blade"
+             scale_factor="80" />
+      <Piece id="piece_shard_grip_1"
+             Type="Handle"
+             scale_factor="80" />
+      <Piece id="piece_shard_guard_1"
+             Type="Guard"
+             scale_factor="80" />
+      <Piece id="piece_shard_pommel_1"
+             Type="Pommel"
+             scale_factor="80" />
+    </Pieces>
+  </CraftedItem>
+</Items>
