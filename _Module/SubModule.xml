@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
-  <Id value="$modulename$" />
-  <Name value="$modulename$" />
-  <Version value="v$version$" />
-  <Official value="false" />
-  <DefaultModule value="false" />
-  <!-- e1.7.1 -->
-  <SingleplayerModule value="true" />
-  <MultiplayerModule value="false" />
-  <!-- e1.8.0 -->
-  <ModuleCategory value="Singleplayer"/>
-  <DependedModules>
-    <DependedModule Id="Native" DependentVersion="e1.8.0"  />
-    <DependedModule Id="SandBoxCore" DependentVersion="e1.8.0"  />
-    <DependedModule Id="Sandbox" DependentVersion="e1.8.0"  />
-    <DependedModule Id="StoryMode" DependentVersion="e1.8.0"  />
-    <DependedModule Id="CustomBattle" DependentVersion="e1.8.0"  />
-    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.2.85"/>
-  </DependedModules>
-  <SubModules>
-    <SubModule>
-      <Name value="$modulename$" />
-      <DLLName value="$modulename$.dll" />
-      <SubModuleClassType value="$modulename$.SubModule" />
-      <Tags>
-        <Tag key="DedicatedServerType" value ="none" />
-      </Tags>
-    </SubModule>
-  </SubModules>
-  <Xmls>
-     <XmlNode>         
+				xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
+	<Id value="$modulename$" />
+	<Name value="$modulename$" />
+	<Version value="v$version$" />
+	<Official value="false" />
+	<DefaultModule value="false" />
+	<!-- e1.7.1 -->
+	<SingleplayerModule value="true" />
+	<MultiplayerModule value="false" />
+	<!-- e1.8.0 -->
+	<ModuleCategory value="Singleplayer"/>
+	<DependedModules>
+		<DependedModule Id="Native" DependentVersion="e1.8.0"  />
+		<DependedModule Id="SandBoxCore" DependentVersion="e1.8.0"  />
+		<DependedModule Id="Sandbox" DependentVersion="e1.8.0"  />
+		<DependedModule Id="StoryMode" DependentVersion="e1.8.0"  />
+		<DependedModule Id="CustomBattle" DependentVersion="e1.8.0"  />
+		<DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.2.85"/>
+	</DependedModules>
+	<SubModules>
+		<SubModule>
+			<Name value="$modulename$" />
+			<DLLName value="$modulename$.dll" />
+			<SubModuleClassType value="$modulename$.SubModule" />
+			<Tags>
+				<Tag key="DedicatedServerType" value ="none" />
+			</Tags>
+		</SubModule>
+	</SubModules>
+	<Xmls>
+		 <XmlNode>         
 			<XmlName id="CraftingPieces" path="crafting_pieces"/>
 			<IncludedGameTypes>
 				<GameType value = "Campaign"/>
@@ -39,22 +39,22 @@
 				<GameType value = "EditorGame"/>
 			</IncludedGameTypes>
 		</XmlNode>
-    <XmlNode>                
+		<XmlNode>                
 			<XmlName id="WeaponDescriptions" path="weapon_descriptions"/>
 		</XmlNode>   
-    <XmlNode>                
+		<XmlNode>                
 			<XmlName id="CraftingTemplates" path="crafting_templates"/>
 		</XmlNode>
-    <XmlNode>
-      <XmlName id="Items" path="items"/>
-      <IncludedGameTypes>
-        <GameType value = "Campaign"/>
-        <GameType value = "CampaignStoryMode"/>
-        <GameType value = "CustomGame"/>
-        <GameType value = "EditorGame"/>
-      </IncludedGameTypes>
-    </XmlNode>
+		<XmlNode>
+			<XmlName id="Items" path="items"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+				<GameType value = "CustomGame"/>
+				<GameType value = "EditorGame"/>
+			</IncludedGameTypes>
+		</XmlNode>
 
 
-  </Xmls>
+	</Xmls>
  </Module>
