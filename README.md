@@ -4,6 +4,7 @@
 
 ## Dev Requirements
 
+* [Git LFS](https://git-lfs.github.com/) (for version handling 3D models)
 * Bannerlord version e1.8
 * [Harmony for Bannerlord at NexusMods](https://www.nexusmods.com/mountandblade2bannerlord/mods/2006)
 * Visual Studio 2022 Community Edition (probably works with other versions too)
