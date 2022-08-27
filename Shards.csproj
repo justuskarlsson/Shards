@@ -9,7 +9,7 @@
     <ModuleId>$(MSBuildProjectName)</ModuleId>
     <ModuleName>$(MSBuildProjectName)</ModuleName>
     <GameFolder>$(BANNERLORD_GAME_DIR)</GameFolder>
-    <BaseOutputPath>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Shards\bin</BaseOutputPath>
+    <BaseOutputPath>bin</BaseOutputPath>
     <BaseIntermediateOutputPath>obj</BaseIntermediateOutputPath>
   </PropertyGroup>
 

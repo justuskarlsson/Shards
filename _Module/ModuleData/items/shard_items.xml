@@ -55,4 +55,24 @@
              scale_factor="80" />
     </Pieces>
   </CraftedItem>
+
+  <!--<CraftedItem id="shard_blade_1"
+             name="Shard Blade"
+             crafting_template="TwoHandedSword"
+             is_merchandise="false">
+    <Pieces>
+      <Piece id="battania_blade_1"
+             Type="Blade"
+             scale_factor="170" />
+      <Piece id="battania_guard_9"
+             Type="Guard"
+             scale_factor="130" />
+      <Piece id="khuzait_grip_14"
+             Type="Handle"
+             scale_factor="100" />
+      <Piece id="battania_pommel_9"
+             Type="Pommel"
+             scale_factor="100" />
+    </Pieces>
+  </CraftedItem>-->
 </Items>

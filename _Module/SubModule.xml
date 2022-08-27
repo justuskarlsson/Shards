@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
-  <Id value="$modulename$" />
-  <Name value="$modulename$" />
-  <Version value="v$version$" />
+  <Id value="Shards" />
+  <Name value="Shards" />
+  <Version value="v0.0.5" />
   <Official value="false" />
   <DefaultModule value="false" />
   <!-- e1.7.1 -->
@@ -17,13 +17,13 @@
     <DependedModule Id="Sandbox" DependentVersion="e1.8.0"  />
     <DependedModule Id="StoryMode" DependentVersion="e1.8.0"  />
     <DependedModule Id="CustomBattle" DependentVersion="e1.8.0"  />
-    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.2.85"/>
+    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.1.79"/>
   </DependedModules>
   <SubModules>
     <SubModule>
-      <Name value="$modulename$" />
-      <DLLName value="$modulename$.dll" />
-      <SubModuleClassType value="$modulename$.SubModule" />
+      <Name value="Shards" />
+      <DLLName value="Shards.dll" />
+      <SubModuleClassType value="Shards.SubModule" />
       <Tags>
         <Tag key="DedicatedServerType" value ="none" />
       </Tags>

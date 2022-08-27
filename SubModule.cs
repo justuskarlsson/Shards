@@ -17,11 +17,14 @@ namespace Shards
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot() {
             base.OnBeforeInitialModuleScreenSetAsRoot();
-            var harmony = new Harmony("com.Shards.jullinator");
 
+            var harmony = new Harmony("com.Shards.jullinator");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
-
+        public override void OnMissionBehaviorInitialize(Mission mission) {
+            base.OnMissionBehaviorInitialize(mission);
+            mission.AddMissionBehavior(new ShardPlateMissionBehaviour());
+        }
     }
 }
 
