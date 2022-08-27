@@ -6,6 +6,7 @@ using TaleWorlds.ObjectSystem;
 using TaleWorlds.MountAndBlade;
 using System.Collections.Generic;
 using TaleWorlds.Engine;
+using TaleWorlds.Library;
 
 namespace Shards
 {
@@ -19,11 +20,10 @@ namespace Shards
             public ShardPlate(Agent agent) {
                 this.agent = agent;
                 Debug.Log("ShardPlate constructor");
-                //agent.GetSteppedEntity().AddParticleSystemComponent("active_volcano_smoke");
-                //agent.GetSteppedEntity().BurstEntityParticle(true);
-                //agent.GetSteppedEntity().ResumeParticleSystem(true);
-                agent.GetWeaponEntityFromEquipmentSlot(EquipmentIndex.Weapon0).AddParticleSystemComponent("psys_storm_light");
-                agent.GetWeaponEntityFromEquipmentSlot(EquipmentIndex.Weapon0).BurstEntityParticle(true);
+                //MatrixFrame frame = agent.AgentVisuals.GetSkeleton().GetBoneEntitialFrame(10);
+                MatrixFrame frame = MatrixFrame.Identity;
+                agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light", 10, ref frame);
+                //ParticleSystem.CreateParticleSystemAttachedToBone("psys_game_missile_flame", )
             }
 
         };
@@ -47,8 +47,10 @@ namespace Shards
 
         public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
             base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
-            if (affectedAgent != null && affectedAgent.IsMainAgent && plates.IsEmpty()) {
-                Debug.Log("Agent hit, try add plate");
+            if (affectedAgent != null && affectedAgent.IsMainAgent) {
+                Debug.Log("Agent hit, try add effects");
+                //MatrixFrame frame = MatrixFrame.Identity;
+                //affectedAgent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_hit", 10, ref frame);
                 MaybeAddPlate(affectedAgent);
             }
         }
@@ -74,9 +76,10 @@ namespace Shards
             //Debug.Log(Debug.DescribeObject(agent.Equipment));
             //Debug.Log(Debug.DescribeObject(agent.Equipment[EquipmentIndex.Body]));
             //if (agent.Equipment[EquipmentIndex.Body].Item.StringId.Contains("shard_plate")) {
+            if (plates.IsEmpty()) { 
                 Debug.Log("Added Shard plate");
                 plates.Add(new ShardPlate(agent));
-            //}
+            }
         }
     }
 
