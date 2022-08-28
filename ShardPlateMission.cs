@@ -7,11 +7,19 @@ using TaleWorlds.MountAndBlade;
 using System.Collections.Generic;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
+using HarmonyLib;
 
 namespace Shards
 {
+    [HarmonyPatch]
     internal class ShardPlateMissionBehaviour : MissionView
     {
+        public static ShardPlateMissionBehaviour? current = null;
+
+        public override void AfterStart() {
+            base.AfterStart();
+            current = this;
+        }
 
         internal class ShardPlate
         {
@@ -22,7 +30,6 @@ namespace Shards
 
             public ShardPlate(Agent agent) {
                 this.agent = agent;
-                Debug.Log("ShardPlate constructor");
                 //MatrixFrame frame = agent.AgentVisuals.GetSkeleton().GetBoneEntitialFrame(10);
 
             }
@@ -46,7 +53,6 @@ namespace Shards
                 if (agent.Health <= 1f) {
                     return;
                 }
-                Debug.Log("ShardPlate 5s interval callback");
                 int level = 75;
                 if (health <= 25) {
                     level = 25;
@@ -59,26 +65,48 @@ namespace Shards
         };
 
 
-        Dictionary<string, ShardPlate> plates = new Dictionary<string, ShardPlate>();
+        public Dictionary<string, ShardPlate> plates = new Dictionary<string, ShardPlate>();
 
         public override void OnAgentBuild(Agent agent, Banner banner) {
             base.OnAgentBuild(agent, banner);
 
-            EquipmentIndex bodyIdx = EquipmentIndex.Body;
-            ItemObject bodyArmor = agent.SpawnEquipment[bodyIdx].Item;
-            if ( bodyArmor != null && bodyArmor.StringId.Contains("shard_plate")) {
-                Debug.Log("Adding ShardPlate object");
+
+            if ( AgentHasShardPlate(agent)) {
+                Debug.Log("Adding ShardPlate object for: " + agent.Name);
                 plates.Add(agent.Name, new ShardPlate(agent));
             }
         }
 
-
-        public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
-            base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
-            if (affectedAgent != null && plates.ContainsKey(affectedAgent.Name)) {
-                Debug.Log("Agent hit, try add effects");
-                plates[affectedAgent.Name].GetHit(blow);
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(Agent), "HandleBlow")]
+        public static bool HandleBlowPrepatch(ref Blow b, ref AttackCollisionData collisionData, ref Agent __instance) {
+            Agent victim = __instance;
+            //Agent attacker = (b.OwnerId != -1) ? victim.Mission.FindAgentWithIndex(b.OwnerId) : victim; // Check SharBlade
+            if (current != null && current.plates.ContainsKey(victim.Name)) {
+                ShardPlate plate = current.plates[victim.Name];
+                if (plate.health < 1f) {
+                    return true;
+                }
+                Debug.Log("Plate get hit");
+                plate.GetHit(b);
+                return false;
             }
+            return true;
+        }
+        public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
+            Debug.Log("---- OnAgentHit ----- ");
+            base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
+            //if (affectedAgent != null && plates.ContainsKey(affectedAgent.Name)) {
+            //    Debug.Log("Agent hit, try add effects");
+            //    plates[affectedAgent.Name].GetHit(blow);
+            //}
+        }
+
+        public static bool AgentHasShardPlate(Agent agent) {
+            EquipmentIndex bodyIdx = EquipmentIndex.Body;
+            ItemObject bodyArmor = agent.SpawnEquipment[bodyIdx].Item;
+            return bodyArmor != null && bodyArmor.StringId.Contains("shard_plate");
+
         }
 
         public override void OnMissionScreenTick(float dt) {
