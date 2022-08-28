@@ -22,13 +22,13 @@ namespace Shards
                 attackerWeapon.Item != null &&
                 attackerWeapon.GetModifiedItemName().Contains("Shard Blade")
             ) {
-                Debug.Log(
-                    "---- Pre GetAttackCollisionResults ---- ",
-                    attackerWeapon.Item,
-                    "VictimAgentAbsorbedDamageRatio: " + attackInformation.VictimAgentAbsorbedDamageRatio,
-                    "momentumRemaining: " + momentumRemaining,
-                    Debug.DescribeObject(attackCollisionData)
-                 );
+                //Debug.Log(
+                //    "---- Pre GetAttackCollisionResults ---- ",
+                //    attackerWeapon.Item,
+                //    "VictimAgentAbsorbedDamageRatio: " + attackInformation.VictimAgentAbsorbedDamageRatio,
+                //    "momentumRemaining: " + momentumRemaining,
+                //    Debug.DescribeObject(attackCollisionData)
+                // );
                 momentumRemaining = 100f;
                 crushedThrough = true;
                 cancelDamage = false;
@@ -53,13 +53,13 @@ namespace Shards
                 attackerWeapon.Item != null &&
                 attackerWeapon.GetModifiedItemName().Contains("Shard Blade")
             ) {
-                Debug.Log(
-                    "---- Post GetAttackCollisionResults ---- ",
-                    attackerWeapon.Item,
-                    "VictimAgentAbsorbedDamageRatio: " + attackInformation.VictimAgentAbsorbedDamageRatio,
-                    "momentumRemaining: " + momentumRemaining,
-                    Debug.DescribeObject(attackCollisionData)
-                 );
+                //Debug.Log(
+                //    "---- Post GetAttackCollisionResults ---- ",
+                //    attackerWeapon.Item,
+                //    "VictimAgentAbsorbedDamageRatio: " + attackInformation.VictimAgentAbsorbedDamageRatio,
+                //    "momentumRemaining: " + momentumRemaining,
+                //    Debug.DescribeObject(attackCollisionData)
+                // );
             }
         }
 
@@ -78,7 +78,7 @@ namespace Shards
             ref float attackerStunPeriod, ref bool crushedThrough, ref bool chamber) {
 
             if (attackerAgent.WieldedWeapon.Item.StringId.Contains("shard_blade")) {
-                Debug.Log("Pre Defend ColissionResult", "collisions_result: " + collisionResult, "Parried:" + attackIsParried);
+                //Debug.Log("Pre Defend ColissionResult", "collisions_result: " + collisionResult, "Parried:" + attackIsParried);
                 defenderStunPeriod = 0f;
                 attackerStunPeriod = 0f;
                 crushedThrough = true;

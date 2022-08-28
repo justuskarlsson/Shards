@@ -16,49 +16,77 @@ namespace Shards
         internal class ShardPlate
         {
             public float health = 100f;
+            bool leaking = false;
             Agent agent;
+            System.Threading.Timer? psys_thread;
+
             public ShardPlate(Agent agent) {
                 this.agent = agent;
                 Debug.Log("ShardPlate constructor");
                 //MatrixFrame frame = agent.AgentVisuals.GetSkeleton().GetBoneEntitialFrame(10);
-                //MatrixFrame frame = MatrixFrame.Identity;
-                //agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_2", 10, ref frame);
-                //ParticleSystem.CreateParticleSystemAttachedToBone("psys_game_missile_flame", )
+
             }
 
+            public void GetHit(Blow blow) {
+                MatrixFrame frame = MatrixFrame.Identity;
+                agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_hit", blow.BoneIndex, ref frame);
+                health -= 5f;
+                if (!leaking && health < 75f) {
+                    leaking = true;
+                    psys_thread = new System.Threading.Timer((x) => {
+                        NewParticleSystem();
+                    }, null, 0, 5000);
+                }
+            }
+
+            void NewParticleSystem() {
+                if (agent == null) {
+                    return;
+                }
+                if (agent.Health <= 1f) {
+                    return;
+                }
+                Debug.Log("ShardPlate 5s interval callback");
+                int level = 75;
+                if (health <= 25) {
+                    level = 25;
+                } else if (health <= 50) {
+                    level = 50;
+                }
+                MatrixFrame frame = MatrixFrame.Identity;
+                agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_" + level, 10, ref frame);
+            }
         };
 
-        List<ShardPlate > plates = new List<ShardPlate>();
+
+        Dictionary<string, ShardPlate> plates = new Dictionary<string, ShardPlate>();
 
         public override void OnAgentBuild(Agent agent, Banner banner) {
             base.OnAgentBuild(agent, banner);
 
-            //Debug.Log("---- Shardplate agent created ----",
-            //    Debug.DescribeObject(agent)
-            //);
-            //Debug.Log("Try add plate, agent null:" + agent == null);
-
-            //if (itemRoster.)
-            if ( agent.IsMainAgent ) {
-                agent.SetMaximumSpeedLimit(agent.GetMaximumSpeedLimit() * 3, false);
+            EquipmentIndex bodyIdx = EquipmentIndex.Body;
+            ItemObject bodyArmor = agent.SpawnEquipment[bodyIdx].Item;
+            if ( bodyArmor != null && bodyArmor.StringId.Contains("shard_plate")) {
+                Debug.Log("Adding ShardPlate object");
+                plates.Add(agent.Name, new ShardPlate(agent));
             }
         }
 
 
         public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
             base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
-            if (affectedAgent != null && affectedAgent.IsMainAgent) {
+            if (affectedAgent != null && plates.ContainsKey(affectedAgent.Name)) {
                 Debug.Log("Agent hit, try add effects");
-                MatrixFrame frame = MatrixFrame.Identity;
-                affectedAgent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_2", 10, ref frame);
-                MaybeAddPlate(affectedAgent);
+                plates[affectedAgent.Name].GetHit(blow);
             }
         }
 
         public override void OnMissionScreenTick(float dt) {
             if (Mission != null && Mission.MainAgent != null ) {
-                Debug.Log("Set Speed Limit");
-                Mission.MainAgent.SetMaximumSpeedLimit(400f, false);
+                //Debug.Log("Set Speed Limit");
+                //Mission.MainAgent.SetMaximumSpeedLimit(100f, false);
+                //Mission.MainAgent.SetMinimumSpeed(40f);
+                //Mission.MainAgent.SetCurrentActionSpeed()
             }
             base.OnMissionScreenTick(dt);
         }
@@ -80,15 +108,7 @@ namespace Shards
         //    base.OnRegisterBlow(attacker, victim, realHitEntity, b, ref collisionData, attackerWeapon);
         //}
 
-        void MaybeAddPlate(Agent agent) {
-            //Debug.Log(Debug.DescribeObject(agent.Equipment));
-            //Debug.Log(Debug.DescribeObject(agent.Equipment[EquipmentIndex.Body]));
-            //if (agent.Equipment[EquipmentIndex.Body].Item.StringId.Contains("shard_plate")) {
-            if (plates.IsEmpty()) { 
-                Debug.Log("Added Shard plate");
-                plates.Add(new ShardPlate(agent));
-            }
-        }
+
     }
 
 
