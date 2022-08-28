@@ -21,8 +21,8 @@ namespace Shards
                 this.agent = agent;
                 Debug.Log("ShardPlate constructor");
                 //MatrixFrame frame = agent.AgentVisuals.GetSkeleton().GetBoneEntitialFrame(10);
-                MatrixFrame frame = MatrixFrame.Identity;
-                agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light", 10, ref frame);
+                //MatrixFrame frame = MatrixFrame.Identity;
+                //agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_2", 10, ref frame);
                 //ParticleSystem.CreateParticleSystemAttachedToBone("psys_game_missile_flame", )
             }
 
@@ -49,10 +49,18 @@ namespace Shards
             base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
             if (affectedAgent != null && affectedAgent.IsMainAgent) {
                 Debug.Log("Agent hit, try add effects");
-                //MatrixFrame frame = MatrixFrame.Identity;
-                //affectedAgent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_hit", 10, ref frame);
+                MatrixFrame frame = MatrixFrame.Identity;
+                affectedAgent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_2", 10, ref frame);
                 MaybeAddPlate(affectedAgent);
             }
+        }
+
+        public override void OnMissionScreenTick(float dt) {
+            if (Mission != null && Mission.MainAgent != null ) {
+                Debug.Log("Set Speed Limit");
+                Mission.MainAgent.SetMaximumSpeedLimit(400f, false);
+            }
+            base.OnMissionScreenTick(dt);
         }
 
         //public override void OnRegisterBlow(Agent attacker, Agent victim, GameEntity realHitEntity, Blow b, ref AttackCollisionData collisionData, in MissionWeapon attackerWeapon) {

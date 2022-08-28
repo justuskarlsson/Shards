@@ -41,6 +41,11 @@
     <BuildData piece_offset="0"
                previous_piece_offset="0"
                next_piece_offset="0" />
+    <StatContributions handling_bonus="1"
+                       swing_damage_bonus="1"
+                       swing_speed_bonus="50"
+                       thrust_damage_bonus="1"
+                       thrust_speed_bonus="1" />
     <Materials>
       <Material id="Iron5"
                 count="1" />
@@ -56,7 +61,7 @@
                  weight="0.2"
                  is_default="true">
     <BuildData next_piece_offset="0.0" />
-    <StatContributions armor_bonus="2" />
+    <StatContributions armor_bonus="2"/>
     <Materials>
       <Material id="Iron5"
                 count="1" />

@@ -14,6 +14,7 @@
              leg_armor="40"
              arm_armor="32"
              covers_body="true"
+             speed_bonus="100"
              modifier_group="plate"
              material_type="Plate" />
     </ItemComponent>
