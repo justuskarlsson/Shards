@@ -9,6 +9,8 @@ using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using HarmonyLib;
 
+using System;
+
 namespace Shards
 {
     [HarmonyPatch]
@@ -24,6 +26,7 @@ namespace Shards
         internal class ShardPlate
         {
             public float health = 100f;
+            public static float BASE_SPEED = 9f;
             bool leaking = false;
             Agent agent;
             System.Threading.Timer? psys_thread;
@@ -47,12 +50,11 @@ namespace Shards
             }
 
             void NewParticleSystem() {
-                if (agent == null) {
+                Debug.Log("Stormlight leak 5s");
+                if (this == null || agent == null || agent.Health <= 1f) {
                     return;
                 }
-                if (agent.Health <= 1f) {
-                    return;
-                }
+ 
                 int level = 75;
                 if (health <= 25) {
                     level = 25;
@@ -62,7 +64,13 @@ namespace Shards
                 MatrixFrame frame = MatrixFrame.Identity;
                 agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_" + level, 10, ref frame);
             }
+
+            public void Destroy() {
+                psys_thread?.Dispose();
+            }
         };
+
+
 
 
         public Dictionary<string, ShardPlate> plates = new Dictionary<string, ShardPlate>();
@@ -93,8 +101,11 @@ namespace Shards
             }
             return true;
         }
+
+
+
+
         public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
-            Debug.Log("---- OnAgentHit ----- ");
             base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
             //if (affectedAgent != null && plates.ContainsKey(affectedAgent.Name)) {
             //    Debug.Log("Agent hit, try add effects");
@@ -109,14 +120,36 @@ namespace Shards
 
         }
 
-        public override void OnMissionScreenTick(float dt) {
-            if (Mission != null && Mission.MainAgent != null ) {
-                //Debug.Log("Set Speed Limit");
-                //Mission.MainAgent.SetMaximumSpeedLimit(100f, false);
-                //Mission.MainAgent.SetMinimumSpeed(40f);
-                //Mission.MainAgent.SetCurrentActionSpeed()
+        public override void OnMissionTick(float dt) {
+            base.OnMissionTick(dt);
+            foreach (Agent agent in Mission.AllAgents) {
+                if (agent.IsMainAgent) {
+                    continue;
+                }
+                agent.SetMaximumSpeedLimit(4f, false);
+                //if (!agent.IsMount) {
+                //    agent.SetMaximumSpeedLimit(0.55f, true);
+                //} else {
+                //    agent.SetMaximumSpeedLimit(280f, false);
+                //}
             }
-            base.OnMissionScreenTick(dt);
+            if (Mission != null && Mission.MainAgent != null) {
+                Agent agent = Mission.MainAgent;
+                agent.SetMaximumSpeedLimit(ShardPlate.BASE_SPEED * Math.Max(0.1f, plates[agent.Name].health / 100f), false);
+                //agent.SetMaximumSpeedLimit(agent.getMax, false);
+                //float speed_limit = Traverse.Create(typeof(MBAPI)).Field("IMBAgent").Method("GetCurrentSpeedLimit", ptr).GetValue<float>();
+
+            }
+        }
+
+
+        public override void OnRemoveBehavior() {
+            Debug.Log("Mission Deactivate");
+            foreach (ShardPlate plate in plates.Values) {
+                plate.Destroy();
+            }
+            plates.Clear();
+            base.OnMissionDeactivate();
         }
 
         //public override void OnRegisterBlow(Agent attacker, Agent victim, GameEntity realHitEntity, Blow b, ref AttackCollisionData collisionData, in MissionWeapon attackerWeapon) {

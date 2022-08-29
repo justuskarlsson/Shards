@@ -14,7 +14,6 @@ namespace Shards
             ref bool crushedThrough, ref float momentumRemaining, MissionWeapon attackerWeapon,
             ref bool cancelDamage, ref AttackCollisionData attackCollisionData,
             out CombatLogData combatLog, out int speedBonus) {
-            Debug.Log("---- Pre GetAttackCollisionResults ---- ");
 
             if (
                 !attackInformation.IsVictimAgentNull &&
@@ -63,7 +62,6 @@ namespace Shards
             ref bool crushedThrough, ref float momentumRemaining, MissionWeapon attackerWeapon,
             ref bool cancelDamage, ref AttackCollisionData attackCollisionData,
             ref CombatLogData combatLog, ref int speedBonus) {
-            Debug.Log("---- Post GetAttackCollisionResults ---- ");
 
             if (
                 !attackInformation.IsVictimAgentNull &&
@@ -94,7 +92,7 @@ namespace Shards
             float collisionDistanceOnWeapon, float attackProgress, bool attackIsParried,
             bool isPassiveUsageHit, bool isHeavyAttack, ref float defenderStunPeriod,
             ref float attackerStunPeriod, ref bool crushedThrough, ref bool chamber) {
-            Debug.Log("---- Pre GetDefendCollisionResults ---- ");
+
 
             if (attackerAgent.WieldedWeapon.Item.StringId.Contains("shard_blade")) {
                 //Debug.Log("Pre Defend ColissionResult", "collisions_result: " + collisionResult, "Parried:" + attackIsParried);
@@ -117,7 +115,6 @@ namespace Shards
             ref bool __result
 
          ){
-            Debug.Log("---- Pre DecideAgentShrugOffBlow ---- ");
             // TODO: Change to check if wearing shardplate
             if (victimAgent != null && victimAgent.IsPlayerControlled) {
                 __result = true;

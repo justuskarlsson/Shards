@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
+   <!--mesh="imperial_lamellar_b"-->
    <Item id="shard_plate"
         name="{=VQSdhQE3}Shard Plate"
         mesh="imperial_lamellar_b"
@@ -10,9 +11,9 @@
         appearance="3"
         Type="BodyArmor">
     <ItemComponent>
-      <Armor body_armor="120"
-             leg_armor="40"
-             arm_armor="32"
+      <Armor body_armor="50"
+             leg_armor="20"
+             arm_armor="16"
              covers_body="true"
              speed_bonus="100"
              modifier_group="plate"
@@ -28,7 +29,7 @@
         appearance="2"
         Type="HeadArmor">
     <ItemComponent>
-      <Armor head_armor="104"
+      <Armor head_armor="50"
              has_gender_variations="false"
              hair_cover_type="all"
              beard_cover_type="all"
