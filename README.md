@@ -1,7 +1,7 @@
 # Shards
 
 
-[Video of shard plate stormlight leaking, and shardblade slicing](https://www.youtube.com/watch?v=WNdn-cvZ-64&ab_channel=JustusKarlsson)
+[Video demonstrating the Shardplate and Shardblade](https://www.youtube.com/watch?v=RA3tkLVGXU4&ab_channel=JustusKarlsson)
 
 
  <img src="https://user-images.githubusercontent.com/72207623/187052106-0b2bfda7-4b1d-403c-b268-2c78bd08db0f.png" height=360 /> <img src="https://user-images.githubusercontent.com/72207623/186515035-2644a5e2-af31-4b5f-a8df-dfb1d62b8586.png" width=360 />
@@ -16,4 +16,4 @@
 
 ## Attributes
 * Oathbringer Shardblade 3D Model by Sybren Westendorp on [SketchFab](https://skfb.ly/6VYJX) (License: CC Attribution-Non Commercial Creative Commons Attribution-Non Commercial)
-
+* Help on how to implement faster sprinting for Shardplate: https://github.com/RyotNomad/Run-Mod-for-Bannerlord
