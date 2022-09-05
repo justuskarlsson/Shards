@@ -19,8 +19,6 @@ namespace Shards
             for (int i = 0; i < list.Length; i++) {
                 buffer.Add(list[i] + "");
             }
-            buffer.Add("");
-            buffer.Add("");
             FileLog.LogBuffered(buffer);
             FileLog.FlushBuffer();
             Harmony.DEBUG = false;

@@ -1,5 +1,5 @@
-﻿using TaleWorlds.MountAndBlade;
-using HarmonyLib;
+﻿using HarmonyLib;
+using TaleWorlds.MountAndBlade;
 using System.Reflection;
 
 namespace Shards
@@ -17,9 +17,11 @@ namespace Shards
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot() {
             base.OnBeforeInitialModuleScreenSetAsRoot();
-
+            Debug.Log("Init Harmony");
             var harmony = new Harmony("com.Shards.jullinator");
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
+            Debug.Log("Patch All.");
+            harmony.PatchAll();
+            Debug.Log("Success!");
         }
         public override void OnMissionBehaviorInitialize(Mission mission) {
             base.OnMissionBehaviorInitialize(mission);
