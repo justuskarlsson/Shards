@@ -2,7 +2,7 @@
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.Core;
 
-namespace Shards
+namespace Shards.Battle
 {
     [HarmonyPatch(typeof(MissionCombatMechanicsHelper))]
     public static class ShardBladePatch
@@ -13,14 +13,16 @@ namespace Shards
         private static void GetAttackCollisionResults(AttackInformation attackInformation,
             ref bool crushedThrough, ref float momentumRemaining, MissionWeapon attackerWeapon,
             ref bool cancelDamage, ref AttackCollisionData attackCollisionData,
-            out CombatLogData combatLog, out int speedBonus) {
+            out CombatLogData combatLog, out int speedBonus)
+        {
 
             if (
                 !attackInformation.IsVictimAgentNull &&
                 !attackInformation.IsFriendlyFire &&
                 attackerWeapon.Item != null &&
                 attackerWeapon.GetModifiedItemName().Contains("Shard Blade")
-            ) {
+            )
+            {
                 //Debug.Log(
                 //    "---- Pre GetAttackCollisionResults ---- ",
                 //    attackerWeapon.Item,
@@ -41,7 +43,8 @@ namespace Shards
                 ShardPlateMissionBehaviour.current.plates.ContainsKey(attackInformation.VictimAgentCharacter.Name.ToString()) &&
                 ShardPlateMissionBehaviour.current.plates[attackInformation.VictimAgentCharacter.Name.ToString()].health >= 1f
 
-            ) {
+            )
+            {
                 Debug.Log("Shard blocked");
                 //attackCollisionData = SetShardPlateBlocked(attackCollisionData);
                 cancelDamage = true;
@@ -61,14 +64,16 @@ namespace Shards
         private static void GetAttackCollisionResultsPost(AttackInformation attackInformation,
             ref bool crushedThrough, ref float momentumRemaining, MissionWeapon attackerWeapon,
             ref bool cancelDamage, ref AttackCollisionData attackCollisionData,
-            ref CombatLogData combatLog, ref int speedBonus) {
+            ref CombatLogData combatLog, ref int speedBonus)
+        {
 
             if (
                 !attackInformation.IsVictimAgentNull &&
                 !attackInformation.IsFriendlyFire &&
                 attackerWeapon.Item != null &&
                 attackerWeapon.GetModifiedItemName().Contains("Shard Blade")
-            ) {
+            )
+            {
                 //Debug.Log(
                 //    "---- Post GetAttackCollisionResults ---- ",
                 //    attackerWeapon.Item,
@@ -91,10 +96,12 @@ namespace Shards
             Agent.UsageDirection attackDirection,
             float collisionDistanceOnWeapon, float attackProgress, bool attackIsParried,
             bool isPassiveUsageHit, bool isHeavyAttack, ref float defenderStunPeriod,
-            ref float attackerStunPeriod, ref bool crushedThrough, ref bool chamber) {
+            ref float attackerStunPeriod, ref bool crushedThrough, ref bool chamber)
+        {
 
 
-            if (attackerAgent.WieldedWeapon.Item.StringId.Contains("shard_blade")) {
+            if (attackerAgent.WieldedWeapon.Item.StringId.Contains("shard_blade"))
+            {
                 //Debug.Log("Pre Defend ColissionResult", "collisions_result: " + collisionResult, "Parried:" + attackIsParried);
                 defenderStunPeriod = 0f;
                 attackerStunPeriod = 0f;
@@ -114,9 +121,11 @@ namespace Shards
             Blow blow,
             ref bool __result
 
-         ){
+         )
+        {
             // TODO: Change to check if wearing shardplate
-            if (victimAgent != null && victimAgent.IsPlayerControlled) {
+            if (victimAgent != null && victimAgent.IsPlayerControlled)
+            {
                 __result = true;
                 return false;
             }
@@ -131,8 +140,10 @@ namespace Shards
             StrikeType strikeType,
             float progressEffect, float impactPointAsPercent, float exraLinearSpeed, bool doesAttackerHaveMount,
             ref float __result
-       ) {
-            if (weapon.Item != null && weapon.Item.ToString() == "Shard Blade") {
+       )
+        {
+            if (weapon.Item != null && weapon.Item.ToString() == "Shard Blade")
+            {
                 //Debug.Log(
                 //"---- CalculateBaseMeleeBlowMagnitude ---- ",
                 //weapon.Item,
@@ -149,7 +160,8 @@ namespace Shards
 
 
 
-        public static AttackCollisionData SetNotBlocked(AttackCollisionData a) {
+        public static AttackCollisionData SetNotBlocked(AttackCollisionData a)
+        {
             // s = s.replace("_", "")
             // print("\n".join(["a."+ x[0].upper() + x[1:] for x in s.split(" ")[1::2]]))
             return AttackCollisionData.GetAttackCollisionDataForDebugPurpose(
@@ -198,7 +210,8 @@ namespace Shards
         // But then we can't remove it, since it's not a weapon.
         // Just Harmony prefix Agent.HandleBlow to avoid health decrease. (Still needs access to shardplate instance) ->
         //      static MissionBehior mission instance. Find shardplate by agent name.
-        public static AttackCollisionData SetShardPlateBlocked(AttackCollisionData a) {
+        public static AttackCollisionData SetShardPlateBlocked(AttackCollisionData a)
+        {
             return AttackCollisionData.GetAttackCollisionDataForDebugPurpose(
                 true, //a.AttackBlockedWithShield,
                 true, // a.CorrectSideShieldBlock,

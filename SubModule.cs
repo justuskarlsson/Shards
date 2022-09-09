@@ -25,7 +25,7 @@ namespace Shards
         }
         public override void OnMissionBehaviorInitialize(Mission mission) {
             base.OnMissionBehaviorInitialize(mission);
-            mission.AddMissionBehavior(new ShardPlateMissionBehaviour());
+            mission.AddMissionBehavior(new Battle.ShardPlateMissionBehaviour());
         }
     }
 }

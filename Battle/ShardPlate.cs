@@ -1,8 +1,7 @@
-﻿
-using TaleWorlds.Library;
+﻿using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
-namespace Shards
+namespace Shards.Battle
 {
     internal class ShardPlate
     {
@@ -12,42 +11,52 @@ namespace Shards
         bool leaking = false;
         System.Threading.Timer? psys_thread;
 
-        public ShardPlate(Agent agent) {
+        public ShardPlate(Agent agent)
+        {
             this.agent = agent;
             //MatrixFrame frame = agent.AgentVisuals.GetSkeleton().GetBoneEntitialFrame(10);
 
         }
 
-        public void GetHit(Blow blow) {
+        public void GetHit(Blow blow)
+        {
             Debug.Log("Shardplate hit, inflicted damage:" + blow.InflictedDamage);
             MatrixFrame frame = MatrixFrame.Identity;
             agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_hit", blow.BoneIndex, ref frame);
             health -= 5f;
-            if (!leaking && health < 75f) {
+            if (!leaking && health < 75f)
+            {
                 leaking = true;
-                psys_thread = new System.Threading.Timer((x) => {
+                psys_thread = new System.Threading.Timer((x) =>
+                {
                     NewParticleSystem();
                 }, null, 0, 5000);
             }
         }
 
-        void NewParticleSystem() {
+        void NewParticleSystem()
+        {
             Debug.Log("Stormlight leak 5s");
-            if (this == null || agent == null || agent.Health <= 1f) {
+            if (this == null || agent == null || agent.Health <= 1f)
+            {
                 return;
             }
 
             int level = 75;
-            if (health <= 25) {
+            if (health <= 25)
+            {
                 level = 25;
-            } else if (health <= 50) {
+            }
+            else if (health <= 50)
+            {
                 level = 50;
             }
             MatrixFrame frame = MatrixFrame.Identity;
             agent.AgentVisuals.CreateParticleSystemAttachedToBone("storm_light_" + level, 10, ref frame);
         }
 
-        public void Destroy() {
+        public void Destroy()
+        {
             psys_thread?.Dispose();
         }
     }
